@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Community</title>
+</head>
+<body>
+    <h1>Community</h1>
+{% for p in posts %}
+    <h3>{{ p.title }}      {{ p.created_at }}</h3>
+{% endfor %}
+</body>
+</html>
