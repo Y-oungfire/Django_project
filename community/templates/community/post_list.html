@@ -1,111 +1,8 @@
-<!DOCTYPE html>
-<html>
-{% load static %}
-<head>
-    <title>Blog</title>
-        <link rel="stylesheet" href="{% static 'community/bootstrap/bootstrap.min.css' %}" media="screen">
+{% extends 'community/base.html' %}
 
-    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="/">DjangoBlog</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/community/">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about_me/">About Me</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="logInModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel"> <i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <button type="button" class="btn btn-outline-dark btn-block btn-sm "><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</button>
-                            <button type="button" class="btn btn-outline-dark btn-block btn-sm "><i class="far fa-envelope"></i>&nbsp&nbsp Log in with E-mail</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button type="button" class="btn btn-outline-dark btn-block btn-sm"><i class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4 col-lg-3">
-                <!-- Categories Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Categories</h5>
-                    <div class="card-body">
-
-                            <div class="col; text-center;">
-                                <ul class="list-unstyled mb-0">
-                                    <li>
-                                        <a href="#">자유 게시판</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">HTML</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Freebies</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 col-lg-9">
+{% block main_area %}
                 <h1>커뮤니티</h1>
-                <table class="table table-bordered">
+                <table class="table table-hover" style="border:2px solid #000000;">
                     <thead>
                         <tr>
                             <th class="text-center">카테고리</th>
@@ -114,16 +11,18 @@
                             <th class="text-center">작성일자</th>
                         </tr>
                     </thead>
+                    {% if posts.exists %}
                     {% for p in posts %}
                     <tbody>
                     <tr>
-                        <td clss="text-center" style="width: 15%" class="text-center">{{ p.title }}</td>
-                        <td class="text-reset" style="width: 55%"><a href="{{ p.get_absolute_url }}" style="color: black;">{{ p.title }}</a></td>
-                        <td clss="text-center" style="width: 15%">{{ p.title }}</td>
-                        <td clss="text-center" style="width: 15%">{{ p.created_at.year }}.{{ p.created_at.month }}.{{ p.created_at.day }}</td>
+                        <td class="text-center" style="width: 20%" class="text-center">자유 게시판</td>
+                        <td class="text-left" style="width: 55%"><a href="{{ p.get_absolute_url }}" style="color: black;">{{ p.title | truncatechars:20}}</a></td>
+                        <td class="text-center" style="width: 15%">{{ p.author }}</td>
+                        <td class="text-center" style="width: 10%">{{ p.created_at.year }}.{{ p.created_at.month }}.{{ p.created_at.day }}</td>
                     </tr>
                     </tbody>
                     {% endfor %}
+                    {% endif %}
                 </table>
 
 
@@ -136,34 +35,4 @@
                         <a class="page-link" href="#">Newer &rarr;</a>
                     </li>
                 </ul>
-
-            </div>
-
-
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">
-                Copyright &copy; Do It Django A to Z 2021
-            </p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-
-</body>
-
-</html>
+{% endblock %}
