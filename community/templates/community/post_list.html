@@ -1,6 +1,11 @@
 {% extends 'community/base.html' %}
 
 {% block main_area %}
+        {% if user.is_authenticated %}
+            <a class="btn btn-info btn-sm float-right" href="/community/create_post" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;글쓰기</a>
+        {% endif %}
+
+
                 <h1>커뮤니티</h1>
                 <table class="table table-hover" style="border:2px solid #000000;">
                     <thead>
@@ -15,7 +20,7 @@
                         {% for p in post_list %}
                       <tbody>
                       <tr>
-                            <td class="text-center" style="width: 20%" class="text-center">자유 게시판</td>
+                            <td class="text-center" style="width: 20%" class="text-center">{{ p.category }}</td>
                          <td class="text-left" style="width: 55%"><a href="{{ p.get_absolute_url }}" style="color: black;">{{ p.title | truncatechars:20}}</a></td>
                             <td class="text-center" style="width: 15%">{{ p.author }}</td>
                             <td class="text-center" style="width: 10%">{{ p.created_at.year }}.{{ p.created_at.month }}.{{ p.created_at.day }}</td>

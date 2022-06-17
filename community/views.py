@@ -1,7 +1,6 @@
-
-
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Category
 # Create your views here.
 
@@ -26,33 +25,18 @@ class PostDetail(DetailView):
 
         return context
 
+class PostCreate(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
 
-# def index(request):
-#     posts = Post.objects.all().order_by('-pk')
-#     category = Category.objects.all()
-#
-#
-#     return render(
-#         request,
-#         'community/post_list.html',
-#         {
-#             'posts' : posts,
-#             'categories' : category,
-#         }
-#     )
+    def form_valid(self, form):
+        current_user = self.request.user
+        if current_user.is_authenticated:
+            form.instance.author = current_user
+            return super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/community/')
 
-# def single_post_page(request, pk):
-#     post = Post.objects.get(pk=pk)
-#     category = Category.objects.all()
-#
-#     return render(
-#         request,
-#         'community/post_detail.html',
-#         {
-#             'post' : post,
-#             'categories': category,
-#         }
-#     )
 
 def category_page(request, slug):
     if slug == 'no_category':
