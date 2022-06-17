@@ -28,9 +28,7 @@ class PostDetail(DetailView):
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
-
-    template_name = 'community/post_update_form.html'
+    fields = ['category', 'title', 'content', 'head_image', 'file_upload']
 
     def form_valid(self, form):
         current_user = self.request.user
@@ -42,10 +40,12 @@ class PostCreate(LoginRequiredMixin, CreateView):
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
+    fields = ['category', 'title', 'content', 'head_image', 'file_upload']
+
+    template_name = 'community/post_update_form.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticcated and request.user == self.get_object().author:
+        if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
             raise PermissionDenied
