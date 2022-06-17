@@ -7,7 +7,7 @@ def index(request):
 
     return render(
         request,
-        'community/index.html',
+        'community/post_list.html',
         {
             'posts' : posts,
         }
@@ -18,7 +18,7 @@ def single_post_page(request, pk):
 
     return render(
         request,
-        'community/single_post_page.html',
+        'community/post_detail.html',
         {
             'post' : post,
         }
