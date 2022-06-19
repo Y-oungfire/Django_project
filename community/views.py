@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core import paginator
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Comment
@@ -58,17 +58,25 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 
 def category_page(request, slug):
     if slug == 'no_category':
+        page = request.GET.get('page', '1')
         category = '미분류'
         post_list = Post.objects.filter(category=None).order_by('-pk')
+        paginator = Paginator(post_list, '8')
+        page_obj = paginator.get_page(page)
     else:
+        page = request.GET.get('page', '1')
         category = Category.objects.get(slug=slug)
         post_list = Post.objects.filter(category=category).order_by('-pk')
+        paginator = Paginator(post_list, '8')
+        page_obj = paginator.get_page(page)
+
 
     return render(
         request,
         'community/post_list.html',
         {
             'post_list': post_list,
+            'page_obj': page_obj,
             'categories': Category.objects.all(),
             'no_category_post_count': Post.objects.filter(category=category).count(),
             'category': category,
@@ -90,7 +98,8 @@ def new_comment(request, pk):
         else:
             return redirect(post.get_absolute_url())
     else:
-        raise PermissionDenied
+        raise
+
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment

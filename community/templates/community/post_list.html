@@ -16,6 +16,7 @@
                             <th class="text-center">작성일자</th>
                         </tr>
                     </thead>
+
                     {% if post_list.exists %}
                         {% for p in post_list %}
                       <tbody>
@@ -34,7 +35,6 @@
                 <!-- Pagination -->
                 <div class="text-center">
                   <ul class="pagination justify-content-center mb-4">
-
                       {% for page in page_obj.paginator.page_range %}
                           {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
                               <span class="{% if page == page_obj.number %}current{% endif %}">
