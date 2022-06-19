@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Comment
 from .forms import CommentForm
+from django.db.models import Q
 # Create your views here.
 
 class PostList(ListView):
@@ -110,5 +111,9 @@ def delete_comment(request, pk):
     else:
         raise PermissionDenied
 
-
+class PostSearch(PostList):
+    def get_queryset(self):
+        q = self.kwargs['q']
+        post_list = Post.objects.filter(Q(title__contains=q)).order_by('-pk')
+        return post_list
 
