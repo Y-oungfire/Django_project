@@ -109,11 +109,17 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
+
     'django.contrib.auth.backends.ModelBackend',
+
     'allauth.account.auth_backends.AuthenticationBackend',
+
 )
 
 SITE_ID = 1
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGOUT_ON_GET=True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 LOGIN_REDIRECT_URL = '/community/'

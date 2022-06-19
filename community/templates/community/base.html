@@ -25,22 +25,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/about_me/">About Me</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="/accounts/logout/">logout</a>
+                            </div>
+                        </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -61,10 +62,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <a role="button" class="btn btn-outline-dark btn-block btn-sm " href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</a>
-                            <button type="button" class="btn btn-outline-dark btn-block btn-sm "><i class="far fa-envelope"></i>&nbsp&nbsp Log in with E-mail</button>
+                            <a role="button" class="btn btn-outline-dark btn-block btn-sm " href="/accounts/login/"><i class="far fa-envelope"></i>&nbsp&nbsp Log in with Username</a>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-outline-dark btn-block btn-sm"><i class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</button>
+                            <a role="button" class="btn btn-outline-dark btn-block btn-sm " href="/accounts/signup/"><i class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</a>
                         </div>
                     </div>
                 </div>
@@ -76,12 +77,13 @@
     </div>
 
 
+
     <div class="container my-4">
         <div class="row">
             <div class="col-md-4 col-lg-3">
 
                 <!-- Categories Widget -->
-                <div class="card my-4" id="categories-card">
+                <div class="card my-4" style="width: 18rem;" id="categories-card">
                     <h5 class="card-header">Categories</h5>
                     <div class="card-body">
                         <div class="row">
@@ -91,7 +93,7 @@
                                 </li>
                                 {% for category in categories %}
                                     <li>
-                                     <a href="{{ category.get_absolute_url }}">{{ category }}</a>
+                                     <a class="text-center" href="{{ category.get_absolute_url }}">{{ category }}</a>
                                     </li>
                                 {% endfor %}
                             </ul>

@@ -115,5 +115,6 @@ class PostSearch(PostList):
     def get_queryset(self):
         q = self.kwargs['q']
         post_list = Post.objects.filter(Q(title__contains=q)).order_by('-pk')
+
         return post_list
 
