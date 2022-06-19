@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core import paginator
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -9,6 +10,7 @@ from .forms import CommentForm
 class PostList(ListView):
     model = Post
     ordering = '-pk'
+    paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()

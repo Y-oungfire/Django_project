@@ -32,14 +32,18 @@
 
 
                 <!-- Pagination -->
-                <div class="txte-center">
+                <div class="text-center">
                   <ul class="pagination justify-content-center mb-4">
-                       <li class="page-item">
-                         <a class="page-link" href="#">1</a>
-                     </li>
-                     <li class="page-item disabled">
-                          <a class="page-link" href="#">2</a>
-                      </li>
+
+                      {% for page in page_obj.paginator.page_range %}
+                          {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                              <span class="{% if page == page_obj.number %}current{% endif %}">
+                              <a class=page-link href="?page={{ page }}">{{ page }}</a>
+                              </span>
+                          {% endif %}
+
+                      {% endfor %}
+
                   </ul>
                 </div>
 {% endblock %}
