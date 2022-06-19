@@ -34,15 +34,17 @@
         <hr>
     </div>
 
+    <h1>　</h1>
+
     <div id="comment-area">
         <!-- Comments Form -->
-        <div class="card my-4">
+        <div class="card" style="height: 300px;">
           <h5 class="card-header">댓글</h5>
           <div class="card-body">
               {% if user.is_authenticated %}
                   <form id="comment-form" method="Post" action="{{ post.get_absolute_url }}new_comment/">
                     {% csrf_token %}
-                    <div class="form-group">
+                    <div class="form-group" >
                      {{ comment_form | crispy }}
                     </div>
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -52,6 +54,8 @@
               {% endif %}
           </div>
         </div>
+
+        <hr/>
 
         {% if post.comment_set.exists %}
             {% for comment in post.comment_set.iterator %}
@@ -101,6 +105,7 @@
                           {% endif %}
                      </div>
                 </div>
+                <hr/>
             {% endfor %}
         {% endif %}
 
