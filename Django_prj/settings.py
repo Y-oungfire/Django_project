@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'community',
 
     'crispy_forms',
+    'markdownx',
     'django.contrib.sites',
     'allauth',
     'allauth.account',

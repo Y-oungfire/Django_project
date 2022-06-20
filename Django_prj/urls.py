@@ -19,10 +19,12 @@ from django.urls import path, include
 from django.conf import  settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('community/', include('community.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('markdownx/', include('markdownx.urls')),
     path('', include('community.urls')),
 ]
 
