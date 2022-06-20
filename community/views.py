@@ -55,6 +55,14 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         else:
             raise PermissionDenied
 
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.user.is_authenticated and request.user == post.author:
+        post.delete()
+        return redirect('/community/')
+    else:
+        raise PermissionDenied
+
 
 def category_page(request, slug):
     if slug == 'no_category':

@@ -13,7 +13,9 @@
         </p>
     <!-- Button -->
     {% if user.is_authenticated and user == post.author %}
+        <a class="btn btn-info btn-sm float-right" href="/community/delete_post/{{ post.pk }}/" role="button"><i class="fas fa-pen"></i>글 삭제</a>
         <a class="btn btn-info btn-sm float-right" href="/community/update_post/{{ post.pk }}/" role="button"><i class="fas fa-pen"></i>글 수정</a>
+
     {% endif %}
       <!-- Date/Time -->
         <p>{{ post.created_at.year }}.{{ post.created_at.month }}.{{ post.created_at.day }}. {{ post.created_at.hour }}:{{ post.created_at.minute }}</p>
